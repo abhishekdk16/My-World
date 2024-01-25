@@ -1,0 +1,22 @@
+pipeline {
+    agent {label 'projecta'}
+
+    stages {
+        stage('GIT Clone') {
+            steps {
+               git branch: 'main', url: 'https://github.com/abhishekdk16/My-World.git'
+            }
+        }
+         stage('Install Apache') {
+            steps {
+                sh 'sudo yum install httpd -y'
+                sh 'sudo systemctl start httpd'
+            }
+        } 
+        stage('Deploying') {
+            steps {
+               sh 'sudo cp -R * /var/www/html/'
+            }
+        }        
+    }
+}
